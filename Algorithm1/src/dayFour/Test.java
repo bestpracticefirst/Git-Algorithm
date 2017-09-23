@@ -18,48 +18,31 @@ public class Test {
 	}
 
 	public ListNode reverseBetween(ListNode head, int m, int n) {
-		if (head == null||m==n)
-			return head;
-		ListNode dummyHead = new ListNode(-1);
-		dummyHead.next = head;
-		ListNode tempDummy = dummyHead;
-		ListNode mNode = null, nNode = null, bmNode = null, bnNode = null;
-		int i=1;
-		while (tempDummy.next != null) {
-			if (i == m) {
-				bmNode = tempDummy;
-				mNode = tempDummy.next;
-				tempDummy = tempDummy.next;
-				i++;
-				while (tempDummy.next != null) {
-					if (i == n) {
-						if (n-1!= m) {
-							bnNode = tempDummy;
-							nNode = tempDummy.next;
-							ListNode temp = nNode.next;
-							nNode.next = mNode.next;
-							bmNode.next = nNode;
-							mNode.next = temp;
-							bnNode.next = mNode;
-							return dummyHead.next;
-						} else {
-							nNode = tempDummy.next;
-							mNode.next=nNode.next;
-							nNode.next=mNode;
-							bmNode.next=nNode;
-							return dummyHead.next;
-						}
-					}
-					tempDummy=tempDummy.next;
-					i++;
-					
-				}
-			}
-			tempDummy=tempDummy.next;
-			i++;
-		}
-		return dummyHead.next;
-	}
+        ListNode newhead = new ListNode(-1);
+        newhead.next = head;
+        
+        if(head==null||head.next==null)
+            return newhead.next;
+            
+        ListNode startpoint = newhead;//startpoint指向需要开始reverse的前一个
+        ListNode node1 = null;//需要reverse到后面去的节点
+        ListNode node2 = null;//需要reverse到前面去的节点
+        
+        for (int i = 0; i < n; i++) {
+            if (i < m-1){
+                startpoint = startpoint.next;//找真正的startpoint
+            } else if (i == m-1) {//开始第一轮
+                node1 = startpoint.next;
+                node2 = node1.next;
+            }else {
+                node1.next = node2.next;//node1交换到node2的后面
+                node2.next = startpoint.next;//node2交换到最开始
+                startpoint.next = node2;//node2作为新的点
+                node2 = node1.next;//node2回归到node1的下一个，继续遍历
+            }
+        }
+        return newhead.next;
+    }
 
 	public List<List<Integer>> subsetsWithDup(int[] nums) {
 		List res = new ArrayList<ArrayList<Integer>>();

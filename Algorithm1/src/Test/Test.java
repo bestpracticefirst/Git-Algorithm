@@ -11,10 +11,56 @@ public class Test {
 
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
-		int []a= {1,1,1,1,3,3};
-		Test test=new Test();
-		System.out.println(test.removeDuplicates(a));
+		String s="1.5";
+		System.out.println(s.length()-s.lastIndexOf("."));
+
 	}
+	public String multiply(String num1, String num2) {
+		num1 = new StringBuilder(num1).reverse().toString();
+		num2 = new StringBuilder(num2).reverse().toString();
+		int []d=new int[num1.length()+num2.length()];
+		char []nums1=num1.toCharArray();
+		char []nums2=num2.toCharArray();
+		for(int i=0;i<nums1.length;i++)
+		{
+		for(int j=0;j<nums2.length;j++)
+		{
+		d[i+j]+=(nums1[i]-'0')*(nums2[j]-'0');
+		}
+		}
+		for(int i=0,c=0;i<d.length;i++)
+		{
+		int temp=d[i]+c;
+		d[i]=temp%10;
+		c=temp/10;
+		}
+		String s="";
+		for(int i=0;i<d.length;i++)
+		{
+		s=d[i]+s;
+		}
+		while(s.length()>1&&s.charAt(0)=='0')
+		s=s.substring(1);
+		return s;
+		}
+	public double myPow(double x, int n) {
+		if (n == 0) return 1;
+		if (n == 1) return x;
+		if (n == -1) return 1 / x;
+		return myPow(x * x, n / 2) * myPow(x, n % 2);
+		}
+    public int climbStairs(int n) {
+    	if(n==1)
+    		return 1;
+    	int oneStep=1,twoStep=1,res=0;
+    	for(int i=2;i<=n;i++)
+    	{
+    		res=oneStep+twoStep;
+    		twoStep=oneStep;
+    		oneStep=res;
+    	}
+    	return res;
+    }
     public int removeDuplicates(int[] nums) {
     	if(nums==null||nums.length<3)
     		return nums.length;
