@@ -26,8 +26,8 @@ public class Test1 {
         	if(inorder[j]==postorder[idx])
         		break;
         }
-        root.left=helper2(postorder, idx-1, inorder, j+1, end);
-        root.right=helper2(postorder, idx-end+j-1, inorder, start,j-1);
+        root.right=helper2(postorder, idx-1, inorder, j+1, end);
+        root.left=helper2(postorder, idx-end+j-1, inorder, start,j-1);
         return root;
         
 	}
