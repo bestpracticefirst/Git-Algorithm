@@ -1,17 +1,63 @@
 package dayEleven;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Queue;
+import java.util.Set;
 
 public class Test {
 
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
 		Test a = new Test();
-		int[] b = { 2, 4, 3, 7 };
-		a.maxProfit(b);
+		List<String>b=new ArrayList<>();
+		b.add("hot");
+		b.add("dot");
+		b.add("dog");
+		b.add("lot");
+		b.add("log");
+		b.add("cog");
+		a.ladderLength1("hit", "cog", b);
 	}
+	   public int ladderLength1(String beginWord, String endWord, List<String> wordList) {
+	        if (wordList == null || wordList.size() == 0) return 0;
+	        Set<String> dic = new HashSet<>(wordList);
+	        if (!dic.contains(endWord)) return 0;
+	        if (beginWord.equals(endWord)) return 1;
+	        Set<String> q1 = new HashSet<>(), q2 = new HashSet<>();
+	        q1.add(beginWord);
+	        dic.remove(beginWord);
+	        q2.add(endWord);
+	        dic.remove(endWord);
+	        return twoEndBFS(q1, q2, dic, 2);
+	    }
 
+	    private int twoEndBFS(Set<String> q1, Set<String> q2, Set<String> dic, int len) {
+	        if (q1.isEmpty() || q2.isEmpty()) return 0;
+	        if (q1.size() > q2.size()) return twoEndBFS(q2, q1, dic, len);
+
+	        Set<String> temp = new HashSet<>();
+	        for (String word : q1) {
+	            char[] chArr = word.toCharArray();
+	            for (int i = 0; i < chArr.length; ++i) {
+	                char c = chArr[i];
+	                for (char newC = 'a'; newC <= 'z'; ++newC) {
+	                    chArr[i] = newC;
+	                    String next = new String(chArr);
+	                    if (q2.contains(next)) return len;
+	                    if (dic.contains(next)) {
+	                        temp.add(next);
+	                        dic.remove(next);
+	                    }
+	                }
+	                chArr[i] = c;
+	            }
+	        }
+	        return twoEndBFS(temp, q2, dic, len + 1);
+	    }
 	public int maxProfit1(int[] prices) {
 		if (prices == null || prices.length <= 1) {
 			return 0;
@@ -56,35 +102,44 @@ public class Test {
 	}
 
 	public int ladderLength(String beginWord, String endWord, List<String> wordList) {
-		if (wordList.size() == 0)
-			return 0;
+		 if(beginWord==null || endWord==null || beginWord.length()==0 || endWord.length()==0 || beginWord.length()!=endWord.length())  
+		        return 0; 
+		        
+		        LinkedList<String> wordQueue = new LinkedList<String>();
+		        int level = 1; //the start string already count for 1
+		        int curnum = 1;//the candidate num on current level
+		        int nextnum = 0;//counter for next level
+		        
+		        wordQueue.add(beginWord);
+		        
+		        while(!wordQueue.isEmpty()){
+		            String word = wordQueue.poll();
+		            curnum--;
+		            
+		            for(int i = 0; i < word.length(); i++){
+		                char[] wordunit = word.toCharArray();
+		                for(char j = 'a'; j <= 'z'; j++){
+		                    wordunit[i] = j;
+		                    String temp = new String(wordunit);  
+		                    
 
-		LinkedList<String> wordQueue = new LinkedList<String>();
-		LinkedList<Integer> distanceQueue = new LinkedList<Integer>();
-
-		wordQueue.add(beginWord);
-		distanceQueue.add(1);
-
-		while (!wordQueue.isEmpty()) {
-			String currWord = wordQueue.pop();
-			Integer currDistance = distanceQueue.pop();
-			if (currWord.equals(endWord)) {
-				return currDistance;
-			}
-			for (int i = 0; i < currWord.length(); i++) {
-				char[] currCharArr = currWord.toCharArray();
-				for (char c = 'a'; c <= 'z'; c++) {
-					currCharArr[i] = c;
-
-					String newWord = new String(currCharArr);
-					if (wordList.contains(newWord)) {
-						wordQueue.add(newWord);
-						distanceQueue.add(currDistance + 1);
-						wordList.remove(newWord);
-					}
-				}
-			}
-		}
-		return 0;
+		                    if(wordList.contains(temp)){
+			                    if(temp.equals(endWord))
+			                        return level+1;
+		                        wordQueue.add(temp);
+		                        nextnum++;
+		                        wordList.remove(temp);
+		                    }
+		                }
+		            }
+		            
+		            if(curnum == 0){
+		                curnum = nextnum;
+		                nextnum = 0;
+		                level++;
+		            }
+		        }
+		        
+		        return 0;
 	}
 }
