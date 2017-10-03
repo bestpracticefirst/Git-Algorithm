@@ -22,36 +22,82 @@ public class Test {
 		a.wordBreak2("leetcode", wordDict);
 
 	}
+    public List<Integer> postorderTraversal(TreeNode root) {
+		List<Integer> res=new ArrayList<>();
+		postorderHelper(root, res);
+		return res;
+    }
+	public void postorderHelper(TreeNode root,List<Integer>res)
+	{
+		if(root==null)
+			return;
+		postorderHelper(root.left, res);
+		postorderHelper(root.right, res);
+		res.add(root.val);
+	}
+	public List<Integer> preorderTraversal(TreeNode root) {
+		List<Integer> res=new ArrayList<>();
+		preorderHelper(root, res);
+		return res;
+	}
+	public void preorderHelper(TreeNode root,List<Integer>res)
+	{
+		if(root==null)
+			return;
+		res.add(root.val);
+		preorderHelper(root.left, res);
+		preorderHelper(root.right, res);
+	}
+	public ListNode detectCycle(ListNode head) {
+		if (head == null)
+			return null;
+		ListNode slow = head;
+		ListNode fast = head;
+		while (fast.next != null && fast.next.next != null) {
+			slow = slow.next;
+			fast = fast.next.next;
+			if (slow == fast) {
+				while (head != slow) {
+					slow = slow.next;
+					head = head.next;
+				}
+				return slow;
+			}
+		}
+		return null;
+	}
+
 	public List<String> wordBreak2(String s, List<String> wordDict) {
-	    return DFS(s, wordDict, new HashMap<String, LinkedList<String>>());
-	  }
+		return DFS(s, wordDict, new HashMap<String, LinkedList<String>>());
+	}
 
-	  List<String> DFS(String s, List<String> wordDict, HashMap<String, LinkedList<String>> map) {
+	List<String> DFS(String s, List<String> wordDict, HashMap<String, LinkedList<String>> map) {
 
-	    if(map.containsKey(s))
-	      return map.get(s);
+		if (map.containsKey(s))
+			return map.get(s);
 
-	    LinkedList<String> res = new LinkedList<>();
-	    if(s.length() == 0) {
-	      res.add("");
-	      return res;
-	    }
+		LinkedList<String> res = new LinkedList<>();
+		if (s.length() == 0) {
+			res.add("");
+			return res;
+		}
 
-	    for(String word : wordDict) {
-	      if(s.startsWith(word)) {
-	        List<String> sublist = DFS(s.substring(word.length()), wordDict, map);
-	        for(String each : sublist) {
-	          res.add(word+(each.isEmpty() ? "":" ")+each);
-	        }
-	      }
-	    }
-//	    map.put(s,res);
-	    return res;
-	  }
+		for (String word : wordDict) {
+			if (s.startsWith(word)) {
+				List<String> sublist = DFS(s.substring(word.length()), wordDict, map);
+				for (String each : sublist) {
+					res.add(word + (each.isEmpty() ? "" : " ") + each);
+				}
+			}
+		}
+		// map.put(s,res);
+		return res;
+	}
+
 	public List<String> wordBreak1(String s, List<String> wordDict) {
 
 		List<String> res = new ArrayList<String>();
-		if(wordDict==null||wordDict.size()==0)
+		if (wordDict == null || wordDict.size() == 0)
 			return res;
 		HashMap<String, List<String>> map = new HashMap<>();
 		boolean[] seperated = new boolean[s.length() + 1];
@@ -65,7 +111,7 @@ public class Test {
 						item.add(s.substring(j, i));
 						map.put(s.substring(0, i), item);
 					} else {
-						String c=s.substring(j,i);
+						String c = s.substring(j, i);
 						map.get(s.substring(0, i)).add(c);
 					}
 
@@ -87,7 +133,7 @@ public class Test {
 			} else {
 				String temp2 = temp;
 				temp = a + " " + temp;
-				buildSolution(res, map, s.substring(0,s.lastIndexOf(a)), temp);
+				buildSolution(res, map, s.substring(0, s.lastIndexOf(a)), temp);
 				temp = temp2;
 			}
 		}
@@ -248,6 +294,26 @@ public class Test {
 			prev.put(b, new ArrayList<String>());
 		}
 		prev.get(b).add(a);
+	}
+}
+
+class TreeNode {
+	int val;
+	TreeNode left;
+	TreeNode right;
+
+	TreeNode(int x) {
+		val = x;
+	}
+}
+
+class ListNode {
+	int val;
+	ListNode next;
+
+	ListNode(int x) {
+		val = x;
+		next = null;
 	}
 }
 
