@@ -11,9 +11,10 @@ public class Test {
 		Point b=new Point(3,3);
 		Point c=new Point(-5,3);
 		Test d=new Test();
-		int[] e= {3,1,2};
+		int[] e= {1,2};
 		d.findMin(e);
 	}
+	
     public int findMin(int[] nums) {
         int min = 0, max = nums.length - 1;
         while(min <= max){
