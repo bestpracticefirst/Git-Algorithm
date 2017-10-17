@@ -1,6 +1,7 @@
 package day28;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -12,6 +13,22 @@ public class Test {
 		Test a = new Test();
 		System.out.println(a.addDigits(10000));
 	}
+    public int[] singleNumber(int[] nums) {
+        int[] ans = new int[2];
+        int diff = 0;
+        for(int num : nums) {
+            diff ^= num;
+        }
+        diff &= -diff;
+        for(int num : nums) {
+            if((num & diff) == 0) {
+                ans[0] ^= num;
+            }else {
+                ans[1] ^= num;
+            }
+        }
+        return ans;
+    }
     public int addDigits(int num) {
         return num==0 ? 0:(num%9==0 ? 9: num%9);
     }
@@ -57,11 +74,17 @@ public class Test {
 		for (int i = 0; i < words.length; i++) {
 			if (words[i].equals(word1)) {
 				index1 = i;
-				min = Math.min(min, index1 - index2);
+				if(index1!=-1&&index2!=-1)
+				{
+				    min = Math.min(min, index2 - index1);
+				}
 			}
 			if (words[i].equals(word2)) {
 				index2 = i;
-				min = Math.min(min, index2 - index1);
+				if(index1!=-1&&index2!=-1)
+				{
+				    min = Math.min(min, index2 - index1);
+				}
 			}
 		}
 		if (index1 == -1 || index2 == -1)
