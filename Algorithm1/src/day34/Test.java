@@ -1,5 +1,9 @@
 package day34;
 
+import java.util.ArrayList;
+import java.util.LinkedList;
+import java.util.Queue;
+
 public class Test {
 
 	public static void main(String[] args) {
@@ -8,6 +12,7 @@ public class Test {
 		int[] a= {1,3,6,7,9,4,10,5,6};
 		aTest.lengthOfLIS(a);
 	}
+	
     public int lengthOfLIS(int[] nums) {
     	if(nums.length<2)
     		return nums.length;
@@ -51,4 +56,20 @@ public class Test {
         String s=bull+"A"+cows+"B";
         return s;
     }
+}
+class NumArray {
+    int[] sums;  
+    
+    public NumArray(int[] nums) {  
+        sums = new int[nums.length];  
+        System.arraycopy(nums, 0, sums, 0, nums.length);  
+        for(int i=1; i<sums.length; i++) {  
+            sums[i] += sums[i-1];   
+        }  
+    }  
+  
+    public int sumRange(int i, int j) {  
+        if(i>j || i<0 || j<0 || j>=sums.length) return 0;  
+        return i==0 ? sums[j] : (sums[j] - sums[i-1]);  
+    }  
 }
