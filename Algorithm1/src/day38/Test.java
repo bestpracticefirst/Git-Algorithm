@@ -15,13 +15,13 @@ public class Test {
 	}
     public int[] countBits(int num) {
         int[] count =new int[num+1];
-        int pow=0;
+        int pow=1;
         for(int i=1,j=0;i<=num;i++)
         {
-        	if(i==(int)Math.pow(2, pow))
+        	if(i==pow)
         	{
         		j=0;
-        		pow++;
+        		pow=pow*2;
         	}
         	count[i]=count[j]+1;
         	j++;
