@@ -46,17 +46,6 @@ public class Test {
        return count+1;
        
     }
-    public int getMoneyAmount(int n) {
-    	int left=1, right=n;
-    	int money=0;
-    	while(left<right)
-    	{
-    		int mid=left+(right-left)/2;
-    		money+=mid;
-    		left=mid+1;
-    	}
-    	return money;
-    }
     private class pairComp implements Comparator<int[]>{
         public int compare(int[] p1, int[] p2){
             return p1[0]+p1[1]-p2[0]-p2[1];
