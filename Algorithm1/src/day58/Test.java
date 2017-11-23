@@ -9,18 +9,8 @@ public class Test {
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
 		Test aTest = new Test();
-		TreeNode a=new TreeNode(1);
-		TreeNode b=new TreeNode(1);
-		TreeNode c=new TreeNode(1);
-		TreeNode d=new TreeNode(3);
-		TreeNode e=new TreeNode(3);
-		TreeNode f=new TreeNode(3);
-		a.left=b;
-		b.left=c;
-		b.right=d;
-		d.left=e;
-		d.right=f;
-		System.out.println(aTest.findMode(a));
+		
+		System.out.println();
 	}
 	int max=0;
 	int countNode=1;
@@ -35,7 +25,6 @@ public class Test {
 			resArray[i]=res.get(i);
 		return resArray;
 	}
-
 	private void dfsHelper(TreeNode root, List<Integer> res) {
 		// TODO Auto-generated method stub
 		if(root==null)
@@ -59,7 +48,6 @@ public class Test {
 			res.add(root.val);
 		}
 		pre=root.val;
-		System.out.println(pre);
 		dfsHelper(root.right, res);
 		
 	}
