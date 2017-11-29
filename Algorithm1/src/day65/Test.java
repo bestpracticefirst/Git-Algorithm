@@ -29,8 +29,8 @@ public class Test {
     		return true;
     	for(int i=s1.length();i<s2.length();i++)
     	{
-    		count[s2.charAt(i)]++;
-    		count[s2.charAt(i-s1.length())]--;
+    		count[s2.charAt(i)-'a']--;
+    		count[s2.charAt(i-s1.length())-'a']++;
     		if(allZero(count))
     			return true;
     	}
